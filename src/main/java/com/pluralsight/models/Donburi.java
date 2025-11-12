@@ -1,4 +1,4 @@
 package com.pluralsight.models;
 
-public class Donburi {
+public class Donburi extends MenuItem {
 }
