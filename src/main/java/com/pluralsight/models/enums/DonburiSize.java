@@ -1,4 +1,4 @@
-package com.pluralsight.models;
+package com.pluralsight.models.enums;
 
 public enum DonburiSize {
     // these statements implicitly call the constructor defined below to instantiate an enum with basePrice property assigned

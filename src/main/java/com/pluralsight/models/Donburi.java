@@ -1,5 +1,8 @@
 package com.pluralsight.models;
 
+import com.pluralsight.models.enums.DonburiSize;
+import com.pluralsight.models.enums.ToppingType;
+
 import java.util.ArrayList;
 import java.util.List;
 
