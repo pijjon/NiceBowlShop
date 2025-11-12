@@ -42,10 +42,10 @@ public class UserInterface {
             int response = askUserInt("""
                     ORDER MENU
                     
-                    1) Order a NiceBowl
-                    2) Order a Drink
-                    3) Order a serving of Karaage
-                    
+                    1) Add a NiceBowl
+                    2) Add a Drink
+                    3) Add Karaage
+                    4) Confirm Order
                     """);
 
             switch (response) {
