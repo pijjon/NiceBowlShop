@@ -30,6 +30,8 @@ public class UserInterface {
                     isRunning = false;
                     System.out.println("Exiting...");
                     break;
+                default:
+                    System.out.println("Invalid selection, please try again!");
             }
         }
     }
