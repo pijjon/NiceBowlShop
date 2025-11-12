@@ -78,7 +78,7 @@ public class UserInterface {
             scanner.nextLine();
             return response;
         }
-        catch (Exception e){
+        catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
