@@ -1,5 +1,5 @@
 package com.pluralsight.models;
 
-public class MenuItem {
+public abstract class MenuItem {
     protected double price;
 }
