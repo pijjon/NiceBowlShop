@@ -12,6 +12,23 @@ public class Donburi extends MenuItem {
         this.size = size;
     }
 
+    @Override
+    public double getPrice() {
+        double currentPrice = this.basePrice;
+        int premiumCount = this.getListOfPremium().size();
+        int aromaCount = this.getListOfAromaOil().size();
+
+        if (premiumCount > 0) {
+            currentPrice += size.getFirstPrem() + (premiumCount - 1) * size.getExtraPrem();
+        }
+
+        if (aromaCount > 0) {
+            currentPrice += size.getFirstOil() + (aromaCount - 1) * size.getExtraOil();
+        }
+
+        return currentPrice;
+
+    }
 
 
     public List<Topping> getListOfPremium() {
