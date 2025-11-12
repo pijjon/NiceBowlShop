@@ -35,7 +35,28 @@ public class UserInterface {
     }
 
     private void orderScreen() {
+        boolean isRunning = true;
+        while (isRunning) {
+            this.order = new Order();
+            int response = askUserInt("""
+                    ORDER MENU
+                    
+                    1) Order a NiceBowl
+                    2) Order a Drink
+                    3) Order a serving of Karaage
+                    
+                    """);
 
+            switch (response) {
+                case 1:
+                    processNiceBowlOrder();
+                    break;
+                case 2:
+                    isRunning = false;
+                    System.out.println("Exiting...");
+                    break;
+            }
+        }
     }
 
     public String askUserStr(String question) {
