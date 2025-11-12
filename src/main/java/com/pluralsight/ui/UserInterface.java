@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class UserInterface {
     public static Scanner scanner = new Scanner(System.in);
-    private Order order;
 
     public UserInterface() {
     }
