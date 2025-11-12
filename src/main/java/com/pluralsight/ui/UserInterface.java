@@ -39,7 +39,6 @@ public class UserInterface {
         Order order = new Order(askUserStr("Please provide a name for the order: "));
         boolean isRunning = true;
         while (isRunning) {
-            this.order = new Order();
             int response = askUserInt("""
                     ORDER MENU
                     
