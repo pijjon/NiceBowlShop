@@ -41,8 +41,8 @@ public class Donburi extends MenuItem {
     @Override
     public double getPrice() {
         double currentPrice = this.basePrice;
-        int premiumCount = this.getListOfPremium().size();
-        int aromaCount = this.getListOfAromaOil().size();
+        int premiumCount = this.getListOfPremiumToppings().size();
+        int aromaCount = this.getListOfAromaOils().size();
 
         if (premiumCount > 0) {
             currentPrice += size.getFirstPrem() + (premiumCount - 1) * size.getExtraPrem();
@@ -55,23 +55,23 @@ public class Donburi extends MenuItem {
         return currentPrice;
     }
 
-    public List<Topping> getListOfToppings() {
+    public List<Topping> getListOfAllToppings() {
         return toppings;
     }
 
-    public List<Topping> getListOfPremium() {
+    public List<Topping> getListOfPremiumToppings() {
         return this.toppings.stream()
                 .filter(t -> t.type == ToppingType.PREMIUM)
                 .toList();
     }
 
-    public List<Topping> getListOfAromaOil() {
+    public List<Topping> getListOfAromaOils() {
         return this.toppings.stream()
                 .filter(t -> t.type == ToppingType.AROMA_OIL)
                 .toList();
     }
 
-    public List<Topping> getListOfRegular() {
+    public List<Topping> getListOfRegularToppings() {
         return this.toppings.stream()
                 .filter(t -> t.type == ToppingType.REGULAR)
                 .toList();
@@ -83,9 +83,9 @@ public class Donburi extends MenuItem {
                 .toList();
     }
 
-    public List<Topping> getListOfSoup() {
+    public List<Topping> getListOfSides() {
         return this.toppings.stream()
-                .filter(t -> t.type == ToppingType.SOUP)
+                .filter(t -> t.type == ToppingType.SIDE)
                 .toList();
     }
 }
