@@ -1,11 +1,15 @@
 package com.pluralsight.ui;
 
+import com.pluralsight.models.Donburi;
 import com.pluralsight.models.Order;
+import com.pluralsight.models.enums.DonburiSize;
+import com.pluralsight.models.enums.DonburiType;
 
 import java.util.Scanner;
 
 public class UserInterface {
-    public static Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+    private Order currentOrder;
 
     public UserInterface() {
     }
@@ -14,15 +18,16 @@ public class UserInterface {
         boolean isRunning = true;
         while (isRunning) {
             int response = askUserInt("""
-                    WELCOME TO NICE BOWLS
-                    
+                    WELCOME TO THE DON-GEON
                     1) Start an Order
                     2) Exit
-             
+                    
                     """);
 
             switch (response) {
                 case 1:
+                    this.currentOrder = new Order(askUserStr("Please provide a name for the order: "));
+                    System.out.println("Welcome, " + currentOrder.getCustomer());
                     orderScreen();
                     break;
                 case 2:
@@ -36,26 +41,71 @@ public class UserInterface {
     }
 
     private void orderScreen() {
-        Order order = new Order(askUserStr("Please provide a name for the order: "));
         boolean isRunning = true;
         while (isRunning) {
             int response = askUserInt("""
                     ORDER MENU
                     
-                    1) Add a NiceBowl
-                    2) Add a Drink
-                    3) Add Karaage
-                    4) Confirm Order
+                    1) ADD DONBURI
+                    2) ADD DRINK
+                    3) ADD SOUP
+                    4) CHECKOUT
+                    
                     """);
 
             switch (response) {
                 case 1:
-                    processNiceBowlOrder();
+                    processAddDonburiRequest();
                     break;
                 case 2:
-                    isRunning = false;
-                    System.out.println("Exiting...");
+                    // processAddDrinkRequest();
                     break;
+                case 3:
+                    // processAddSoupRequest();
+                    break;
+                case 4:
+                    // processCheckOutRequest();
+                    break;
+            }
+        }
+    }
+
+    public void processAddDonburiRequest() {
+        boolean isRunning = true;
+        while (isRunning) {
+            String response = askUserStr("""
+                    PLEASE SELECT A DONBURI SIZE:
+                    
+                    S) SMALL DON
+                    M) MEDIUM DON
+                    L) LARGE DON
+                    
+                    X) NEVER MIND, GO BACK
+                    
+                    """);
+
+            Donburi currentDonburi;
+
+            switch (response.toLowerCase()) {
+                case "s":
+                    donburiBuilder(DonburiSize.SMALL);
+                    break;
+                    
+                case "m":
+                    donburiBuilder(DonburiSize.MEDIUM);
+                    break;
+
+                case "l":
+                    donburiBuilder(DonburiSize.LARGE);
+                    break;
+
+                case "x":
+                    isRunning = false;
+                    System.out.println("EXITING BACK TO ORDER MENU");
+                    break;
+
+                default:
+                    System.out.println("INVALID SELECTION, PLEASE TRY AGAIN");
             }
         }
     }
@@ -126,8 +176,7 @@ public class UserInterface {
             int response = scanner.nextInt();
             scanner.nextLine();
             return response;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
