@@ -60,6 +60,55 @@ public class UserInterface {
         }
     }
 
+    private Donburi donburiBuilder(DonburiSize size) {
+        Donburi currentDonburi;
+        DonburiType donburiType = promptForDonburiType();
+        currentDonburi = new Donburi(donburiType, size);
+        currentOrder.addItem(currentDonburi);
+        return currentDonburi;
+    }
+
+    private DonburiType promptForDonburiType() {
+        boolean isRunning = true;
+
+        DonburiType donburiType = null;
+
+        while (isRunning) {
+            int response = askUserInt(String.format("""
+                    PLEASE SELECT A DONBURI TYPE:
+                   
+                    1) %s: %s
+                    2) %s: %s
+                    3) %s: %s
+                    4) %s: %s
+                    5) %s: %s
+                    6) %s: %s
+                
+                    """,
+                    DonburiType.GYUDON.name(), DonburiType.GYUDON.getDescription(),
+                    DonburiType.BUTADON.name(), DonburiType.BUTADON.getDescription(),
+                    DonburiType.OYAKODON.name(), DonburiType.OYAKODON.getDescription(),
+                    DonburiType.UNAGIDON.name(), DonburiType.UNAGIDON.getDescription(),
+                    DonburiType.SAKEDON.name(), DonburiType.SAKEDON.getDescription(),
+                    DonburiType.YASAIDON.name(), DonburiType.YASAIDON.getDescription()
+            ));
+
+
+
+            switch (response) {
+                case 1 -> { donburiType = DonburiType.GYUDON; isRunning = false; }
+                case 2 -> { donburiType = DonburiType.BUTADON; isRunning = false; }
+                case 3 -> { donburiType = DonburiType.OYAKODON; isRunning = false; }
+                case 4 -> { donburiType = DonburiType.UNAGIDON; isRunning = false; }
+                case 5 -> { donburiType = DonburiType.SAKEDON; isRunning = false; }
+                case 6 -> { donburiType = DonburiType.YASAIDON; isRunning = false; }
+                default -> System.out.println("Invalid selection, please try again.");
+            }
+        }
+        return donburiType;
+    }
+
+
     public String askUserStr(String question) {
         try {
             System.out.println(question);
