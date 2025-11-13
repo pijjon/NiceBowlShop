@@ -39,10 +39,10 @@ public class UserInterface {
     }
 
     private void orderScreen() {
-        System.out.println("Welcome, " + currentOrder.getCustomer());
         boolean isRunning = true;
         while (isRunning) {
             clearScreen();
+            System.out.println("Welcome, " + currentOrder.getCustomer());
             int response = askUserInt("""
                     ORDER MENU
                     
