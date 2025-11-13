@@ -5,7 +5,7 @@ public enum ToppingType {
     AROMA_OIL,
     REGULAR,
     SAUCE,
-    SOUP;
+    SIDE;
 
     // will check if "this"/current instance of the ToppingType enum is paid or free
     public boolean isBillable() {
