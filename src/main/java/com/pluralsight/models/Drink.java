@@ -10,6 +10,18 @@ public class Drink extends MenuItem {
         this.size = size;
     }
 
+    // return size
+    public DrinkSize getSize() {
+        return size;
+    }
+
+    //every time size is changed, price will change update
+    public void setSize(DrinkSize size) {
+        this.size = size;
+        this.basePrice = this.getSize().getPrice();
+    }
+
+    // return price
     @Override
     public double getPrice() {
         return this.basePrice;
