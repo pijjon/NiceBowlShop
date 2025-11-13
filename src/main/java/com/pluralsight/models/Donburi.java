@@ -30,6 +30,10 @@ public class Donburi extends MenuItem {
         this.toppings.add(topping);
     }
 
+    public void removeTopping(Topping topping) {
+        this.toppings.remove(topping);
+    }
+
     public SideType getSide() {
         return side;
     }
