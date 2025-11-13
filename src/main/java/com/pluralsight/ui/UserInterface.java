@@ -11,12 +11,10 @@ public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private Order currentOrder;
 
-    public UserInterface() {
-    }
-
     public void start() {
         boolean isRunning = true;
         while (isRunning) {
+        clearScreen();
             int response = askUserInt("""
                     WELCOME TO THE DON-GEON
                     1) Start an Order
@@ -26,8 +24,8 @@ public class UserInterface {
 
             switch (response) {
                 case 1:
+                    clearScreen();
                     this.currentOrder = new Order(askUserStr("Please provide a name for the order: "));
-                    System.out.println("Welcome, " + currentOrder.getCustomer());
                     orderScreen();
                     break;
                 case 2:
@@ -41,8 +39,10 @@ public class UserInterface {
     }
 
     private void orderScreen() {
+        System.out.println("Welcome, " + currentOrder.getCustomer());
         boolean isRunning = true;
         while (isRunning) {
+            clearScreen();
             int response = askUserInt("""
                     ORDER MENU
                     
@@ -75,6 +75,7 @@ public class UserInterface {
     public void processAddDonburiRequest() {
         boolean isRunning = true;
         while (isRunning) {
+            clearScreen();
             String response = askUserStr("""
                     PLEASE SELECT A DONBURI SIZE:
                     
@@ -92,7 +93,7 @@ public class UserInterface {
                 case "s":
                     donburiBuilder(DonburiSize.SMALL);
                     break;
-                    
+
                 case "m":
                     donburiBuilder(DonburiSize.MEDIUM);
                     break;
@@ -125,15 +126,16 @@ public class UserInterface {
     private void promptForDonburiToppings(Donburi currentDonburi) {
         boolean isRunning = true;
         while (isRunning) {
+            clearScreen();
             int response = askUserInt(String.format("""
                     PLEASE SELECT TOPPINGS TO ADD:
                     
                     [%s] %s
-                    [%s] Tamagoyaki
-                    [%s] Tamagoyaki
-                    [%s] Tamagoyaki
-                    [%s] Tamagoyaki
-                    [%s] Tamagoyaki
+                    [%s] %s
+                    [%s] %s
+                    [%s] %s
+                    [%s] %s
+                    [%s] %s
                     
                     """
 
@@ -142,22 +144,24 @@ public class UserInterface {
     }
 
     private DonburiType promptForDonburiType() {
+
         boolean isRunning = true;
 
         DonburiType donburiType = null;
 
         while (isRunning) {
+            clearScreen();
             int response = askUserInt(String.format("""
-                    PLEASE SELECT A DONBURI TYPE:
-                   
-                    1) %s: %s
-                    2) %s: %s
-                    3) %s: %s
-                    4) %s: %s
-                    5) %s: %s
-                    6) %s: %s
-                
-                    """,
+                            PLEASE SELECT A DONBURI TYPE:
+                            
+                            1) %s: %s
+                            2) %s: %s
+                            3) %s: %s
+                            4) %s: %s
+                            5) %s: %s
+                            6) %s: %s
+                            
+                            """,
                     DonburiType.GYUDON.getDisplayName(), DonburiType.GYUDON.getDescription(),
                     DonburiType.BUTADON.getDisplayName(), DonburiType.BUTADON.getDescription(),
                     DonburiType.OYAKODON.getDisplayName(), DonburiType.OYAKODON.getDescription(),
@@ -167,15 +171,35 @@ public class UserInterface {
             ));
 
 
-
             switch (response) {
-                case 1 -> { donburiType = DonburiType.GYUDON; isRunning = false; }
-                case 2 -> { donburiType = DonburiType.BUTADON; isRunning = false; }
-                case 3 -> { donburiType = DonburiType.OYAKODON; isRunning = false; }
-                case 4 -> { donburiType = DonburiType.UNAGI_DON; isRunning = false; }
-                case 5 -> { donburiType = DonburiType.SAKE_DON; isRunning = false; }
-                case 6 -> { donburiType = DonburiType.YASAI_DON; isRunning = false; }
-                default -> System.out.println("Invalid selection, please try again.");
+                case 1 -> {
+                    donburiType = DonburiType.GYUDON;
+                    isRunning = false;
+                }
+                case 2 -> {
+                    donburiType = DonburiType.BUTADON;
+                    isRunning = false;
+                }
+                case 3 -> {
+                    donburiType = DonburiType.OYAKODON;
+                    isRunning = false;
+                }
+                case 4 -> {
+                    donburiType = DonburiType.UNAGI_DON;
+                    isRunning = false;
+                }
+                case 5 -> {
+                    donburiType = DonburiType.SAKE_DON;
+                    isRunning = false;
+                }
+                case 6 -> {
+                    donburiType = DonburiType.YASAI_DON;
+                    isRunning = false;
+                }
+                default -> {
+                    System.out.println("Invalid selection, please try again.");
+                    scanner.nextLine(); // clear scanner buffer
+                }
             }
         }
         return donburiType;
@@ -217,6 +241,10 @@ public class UserInterface {
         }
     }
 
+
+    /*
+    NOTE THIS DOES NOT WORK IN INTELLIJ, SO DEMO IN A TERMINAL
+     */
     // method for clearing the console window
     // using this to make the CLI look more clean and interactive
     private void clearScreen() {
