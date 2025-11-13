@@ -66,6 +66,8 @@ public class UserInterface {
                 case 4:
                     // processCheckOutRequest();
                     break;
+                default:
+                    System.out.println("Invalid input, try again!");
             }
         }
     }
