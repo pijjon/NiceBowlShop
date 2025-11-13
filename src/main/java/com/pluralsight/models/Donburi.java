@@ -30,7 +30,6 @@ public class Donburi extends MenuItem {
         }
 
         return currentPrice;
-
     }
 
 
