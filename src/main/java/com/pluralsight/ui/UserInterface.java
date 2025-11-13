@@ -111,11 +111,32 @@ public class UserInterface {
     }
 
     private Donburi donburiBuilder(DonburiSize size) {
-        Donburi currentDonburi;
         DonburiType donburiType = promptForDonburiType();
-        currentDonburi = new Donburi(donburiType, size);
+        Donburi currentDonburi = new Donburi(donburiType, size);
         currentOrder.addItem(currentDonburi);
+
+        promptForDonburiToppings(currentDonburi);
+
         return currentDonburi;
+    }
+
+    private void promptForDonburiToppings(Donburi currentDonburi) {
+        boolean isRunning = true;
+        while (isRunning) {
+            int response = askUserInt(String.format("""
+                    PLEASE SELECT TOPPINGS TO ADD:
+                    
+                    [%s] %s
+                    [%s] Tamagoyaki
+                    [%s] Tamagoyaki
+                    [%s] Tamagoyaki
+                    [%s] Tamagoyaki
+                    [%s] Tamagoyaki
+                    
+                    """
+
+            ));
+        }
     }
 
     private DonburiType promptForDonburiType() {
@@ -135,12 +156,12 @@ public class UserInterface {
                     6) %s: %s
                 
                     """,
-                    DonburiType.GYUDON.name(), DonburiType.GYUDON.getDescription(),
-                    DonburiType.BUTADON.name(), DonburiType.BUTADON.getDescription(),
-                    DonburiType.OYAKODON.name(), DonburiType.OYAKODON.getDescription(),
-                    DonburiType.UNAGIDON.name(), DonburiType.UNAGIDON.getDescription(),
-                    DonburiType.SAKEDON.name(), DonburiType.SAKEDON.getDescription(),
-                    DonburiType.YASAIDON.name(), DonburiType.YASAIDON.getDescription()
+                    DonburiType.GYUDON.getDisplayName(), DonburiType.GYUDON.getDescription(),
+                    DonburiType.BUTADON.getDisplayName(), DonburiType.BUTADON.getDescription(),
+                    DonburiType.OYAKODON.getDisplayName(), DonburiType.OYAKODON.getDescription(),
+                    DonburiType.UNAGI_DON.getDisplayName(), DonburiType.UNAGI_DON.getDescription(),
+                    DonburiType.SAKE_DON.getDisplayName(), DonburiType.SAKE_DON.getDescription(),
+                    DonburiType.YASAI_DON.getDisplayName(), DonburiType.YASAI_DON.getDescription()
             ));
 
 
@@ -149,9 +170,9 @@ public class UserInterface {
                 case 1 -> { donburiType = DonburiType.GYUDON; isRunning = false; }
                 case 2 -> { donburiType = DonburiType.BUTADON; isRunning = false; }
                 case 3 -> { donburiType = DonburiType.OYAKODON; isRunning = false; }
-                case 4 -> { donburiType = DonburiType.UNAGIDON; isRunning = false; }
-                case 5 -> { donburiType = DonburiType.SAKEDON; isRunning = false; }
-                case 6 -> { donburiType = DonburiType.YASAIDON; isRunning = false; }
+                case 4 -> { donburiType = DonburiType.UNAGI_DON; isRunning = false; }
+                case 5 -> { donburiType = DonburiType.SAKE_DON; isRunning = false; }
+                case 6 -> { donburiType = DonburiType.YASAI_DON; isRunning = false; }
                 default -> System.out.println("Invalid selection, please try again.");
             }
         }
