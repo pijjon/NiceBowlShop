@@ -28,7 +28,7 @@ public class Order {
         this.orderName = orderName;
     }
 
-    public List<MenuItem> getItems() {
+    public List<MenuItem> getAllItems() {
         return items;
     }
 
