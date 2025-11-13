@@ -215,5 +215,16 @@ public class UserInterface {
         }
     }
 
+    // method for clearing the console window
+    // using this to make the CLI look more clean and interactive
+    private void clearScreen() {
+        // "\033[H" moves cursor to the first row
+        // "\033[2J" clears everything past and underneath the cursor
+        System.out.print("\033[H\033[2J");
+
+        // apparently used to force data buffered in System.out to be immediately outputted
+        System.out.flush();
+    }
+
 
 }
