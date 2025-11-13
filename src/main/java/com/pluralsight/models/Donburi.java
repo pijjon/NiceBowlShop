@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Donburi extends MenuItem {
     private DonburiSize size;
-    private List<Topping> toppings = new ArrayList<>();
+    private final List<Topping> toppings = new ArrayList<>();
     private SideType side;
 
     public Donburi(DonburiSize size) {
