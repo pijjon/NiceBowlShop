@@ -1,6 +1,6 @@
 package com.pluralsight.models.enums;
 
-public enum SoupType {
+public enum SoupName {
     KARAAGE,
     VEGGIE_GYOZA
 }

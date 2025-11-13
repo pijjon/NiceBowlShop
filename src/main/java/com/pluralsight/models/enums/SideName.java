@@ -1,6 +1,6 @@
 package com.pluralsight.models.enums;
 
-public enum SideType {
+public enum SideName {
     KARAAGE,
     GYOZA
 }

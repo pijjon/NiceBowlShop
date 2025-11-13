@@ -1,6 +1,6 @@
 package com.pluralsight.models.enums;
 
-public enum DrinkType {
+public enum DrinkName {
     BEER,
     HIGHBALL;
 }
