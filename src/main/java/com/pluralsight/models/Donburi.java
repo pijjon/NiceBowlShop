@@ -1,6 +1,8 @@
 package com.pluralsight.models;
 
 import com.pluralsight.models.enums.DonburiSize;
+import com.pluralsight.models.enums.SideType;
+import com.pluralsight.models.enums.SoupType;
 import com.pluralsight.models.enums.ToppingType;
 
 import java.util.ArrayList;
@@ -9,10 +11,31 @@ import java.util.List;
 public class Donburi extends MenuItem {
     private DonburiSize size;
     private List<Topping> toppings = new ArrayList<>();
+    private SideType side;
 
     public Donburi(DonburiSize size) {
         super("Donburi", size.getBasePrice());
         this.size = size;
+    }
+
+    public DonburiSize getSize() {
+        return size;
+    }
+
+    public void setSize(DonburiSize size) {
+        this.size = size;
+    }
+
+    public void addTopping(Topping topping) {
+        this.toppings.add(topping);
+    }
+
+    public SideType getSide() {
+        return side;
+    }
+
+    public void setSide(SideType side) {
+        this.side = side;
     }
 
     @Override
@@ -32,6 +55,9 @@ public class Donburi extends MenuItem {
         return currentPrice;
     }
 
+    public List<Topping> getListOfToppings() {
+        return toppings;
+    }
 
     public List<Topping> getListOfPremium() {
         return this.toppings.stream()
