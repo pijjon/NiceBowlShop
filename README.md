@@ -17,7 +17,7 @@ A robust Java Command-Line Interface (CLI) Point of Sale (POS) system designed t
 
 -----
 
-## 1\. Project Title and Introduction
+## 1\. Nice Bowl Shop
 
 This project, named **NiceBowlShop**, is a console application built purely in Java. It guides the user through the process of building a complex food order, primarily focusing on customizable Donburi bowls.
 
