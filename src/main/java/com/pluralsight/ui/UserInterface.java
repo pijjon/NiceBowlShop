@@ -268,25 +268,28 @@ public class UserInterface {
 
 
     public String askUserStr(String question) {
-        try {
+        while (true) {
             System.out.println(question);
-            String response = scanner.nextLine();
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+            try {
+                return scanner.nextLine().trim();
+            } catch (Exception e) {
+                System.out.println("Invalid input, please enter a string!");
+                scanner.nextLine();
+            }
         }
     }
 
     public int askUserInt(String question) {
-        try {
+        while (true) {
             System.out.println(question);
-            int response = scanner.nextInt();
-            scanner.nextLine();
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            try {
+                int response = scanner.nextInt();
+                scanner.nextLine();
+                return response;
+            } catch (Exception e) {
+                System.out.println("Invalid input, please enter a number!");
+                scanner.nextLine();
+            }
         }
     }
 
@@ -329,7 +332,7 @@ public class UserInterface {
 
     private void clearScanner() {
         while (scanner.hasNext()) {
-            scanner.next();
+            scanner.nextLine();
         }
     }
 
