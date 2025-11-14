@@ -32,6 +32,24 @@ public class Order {
         return items;
     }
 
+    public List<MenuItem> getDonburiItems() {
+        return this.items.stream()
+                .filter(item -> item instanceof Donburi)
+                .toList();
+    }
+
+    public List<MenuItem> getDrinkItems() {
+        return this.items.stream()
+                .filter(item -> item instanceof Drink)
+                .toList();
+    }
+
+    public List<MenuItem> getSoupItems() {
+        return this.items.stream()
+                .filter(item -> item instanceof Soup)
+                .toList();
+    }
+
     public void addItem(MenuItem item) {
         this.items.add(item);
     }
