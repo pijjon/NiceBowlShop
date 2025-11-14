@@ -37,6 +37,7 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid selection, please try again!");
+                    clearScanner();
             }
         }
     }
@@ -71,6 +72,7 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid input, try again!");
+                    scanner.nextLine();
             }
         }
     }
@@ -95,15 +97,16 @@ public class UserInterface {
             switch (response.toLowerCase()) {
                 case "s":
                     donburiBuilder(DonburiSize.SMALL);
-                    break;
+                    return;
+
 
                 case "m":
                     donburiBuilder(DonburiSize.MEDIUM);
-                    break;
+                    return;
 
                 case "l":
                     donburiBuilder(DonburiSize.LARGE);
-                    break;
+                    return;
 
                 case "x":
                     isRunning = false;
@@ -112,6 +115,7 @@ public class UserInterface {
 
                 default:
                     System.out.println("INVALID SELECTION, PLEASE TRY AGAIN");
+                    scanner.nextLine(); // clear the buffer
             }
         }
     }
@@ -135,7 +139,6 @@ public class UserInterface {
                 processAddDonburiToOrderRequest(currentDonburi);
                 continue;
             }
-
 
             if (responseStr.equalsIgnoreCase("X")) {
                 System.out.println("Cancelling Donburi Creation...");
@@ -172,14 +175,6 @@ public class UserInterface {
         }
     }
 
-    private void pause(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            System.out.printf("Could not pause application for %d seconds", time);
-            e.printStackTrace();
-        }
-    }
 
     private void promptForDonburiToppings(Donburi currentDonburi) {
 
@@ -321,6 +316,16 @@ public class UserInterface {
         // apparently used to force data buffered in System.out to be immediately outputted
         System.out.flush();
     }
+
+    private void pause(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            System.out.printf("Could not pause application for %d seconds", time);
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
