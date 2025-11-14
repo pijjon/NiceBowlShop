@@ -131,25 +131,7 @@ classDiagram
 
 ## 4\. How to Run the Project
 
-The project can be compiled and run from a terminal using standard Java commands (requires **Java 17** or newer, as specified in `pom.xml`).
-
-### Compilation
-
-From the project root directory, run the following command to compile all source files:
-
-```bash
-# Compile all .java files into their respective class files
-javac src/main/java/com/pluralsight/**/*.java
-```
-
-### Execution
-
-Run the main class, ensuring the compiled classes are on the classpath:
-
-```bash
-# Execute the main class
-java -cp src/main/java com.pluralsight.NiceBowlShop
-```
+Compile the code and run the class file in a terminal window (preferably bash, not IDE)
 
 ### Note on Console Clearing
 
@@ -285,28 +267,82 @@ Order Total: $27.25
 
 ## 7\. Interesting Code Snippet
 
-The `Donburi.getPrice()` method showcases the complex business logic for tiered topping pricing, where the first premium/aroma oil item costs one price, and subsequent items of the same type cost a reduced amount. This logic is crucial for modeling a typical POS system's add-on charges.
+Interesting Code Snippet: Interactive Donburi Builder
+
+This snippet showcases the donburiBuilder method, which lets users customize a Donburi bowl in real time via the CLI. Users can add or remove toppings, confirm or cancel the order, and see their selections updated dynamically. The code demonstrates robust input validation, category-based topping display, and clean separation of concerns by updating the Donburi object while keeping the builder logic focused on user interaction. It’s a simple but effective example of combining arrays, enums, and object-oriented principles to create an interactive terminal experience.
 
 ```java
-// src/main/java/com/pluralsight/models/Donburi.java
-@Override
-public double getPrice() {
-    double currentPrice = this.basePrice;
-    int premiumCount = this.getListOfPremiumToppings().size();
-    int aromaCount = this.getListOfAromaOils().size();
+private void donburiBuilder(DonburiSize size) {
+        DonburiType donburiType = promptForDonburiType();
+        Donburi currentDonburi = new Donburi(donburiType, size);
 
-    // The first premium topping costs size.getFirstPrem(), subsequent toppings cost size.getExtraPrem().
-    if (premiumCount > 0) {
-        currentPrice += size.getFirstPrem() + (premiumCount - 1) * size.getExtraPrem();
+        boolean isRunning = true;
+        Topping[] selectedToppings = new Topping[ToppingItem.values().length]; // keeps track of selected toppings
+        while (isRunning) {
+            clearScreen();
+
+            displaySelectedToppings(selectedToppings);
+            String responseStr = askUserStr("""
+                    
+                    Please input corresponding number to add/remove topping
+                    OR
+                    C) Confirm Toppings     X) Cancel Donburi Order
+                    """);
+
+```
+```java
+
+            int indexOfTopping;
+            try {
+                indexOfTopping = Integer.parseInt(responseStr) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input: please enter a valid number, C, or X.");
+                pause(2000); // give user time to read error before it automatically clears at the start of the loop
+                continue;
+            }
+
+            if (indexOfTopping < 0 || indexOfTopping >= selectedToppings.length) {
+                System.out.println("Invalid number: please choose a topping number from the menu.");
+                pause(2000);
+                continue;
+            }
+
+            if (selectedToppings[indexOfTopping] != null) {
+                Topping existingTopping = selectedToppings[indexOfTopping];
+                currentDonburi.removeTopping(existingTopping); // remove from Donburi object
+                selectedToppings[indexOfTopping] = null; // remove from array (for display accuracy)
+            } else {
+                ToppingItem toppingItem = ToppingItem.values()[indexOfTopping];
+                Topping newTopping = new Topping(toppingItem, toppingItem.getType());
+                selectedToppings[indexOfTopping] = newTopping; // add to array (for display accuracy)
+                currentDonburi.addTopping(newTopping); // add to Donburi object
+            }
+
+        }
     }
 
-    // The first aroma oil costs size.getFirstOil(), subsequent oils cost size.getExtraOil().
-    if (aromaCount > 0) {
-        currentPrice += size.getFirstOil() + (aromaCount - 1) * size.getExtraOil();
-    }
+```
+```java
+    // display selected toppings from array
+    private static void displaySelectedToppings(Topping[] selectedToppings) {
+        int displayIndex = 1;
+        // loop through ToppingType values to get headers above each list of topping categories
+        for (ToppingType type : ToppingType.values()) {
+            System.out.println(type.name() + ":");
 
-    return currentPrice;
-}
+            // for each topping type, list toppings below
+            for (ToppingItem toppingItem : ToppingItem.values()) {
+                if (toppingItem.getType() == type) {
+                    System.out.printf("[%s] %2d) %s%n",
+                            (selectedToppings[displayIndex - 1] != null) ? "X" : " ",
+                            displayIndex,
+                            toppingItem.getDisplayName()
+                    );
+                    displayIndex++;
+                }
+            }
+        }
+    }
 ```
 
 -----
@@ -315,6 +351,6 @@ public double getPrice() {
 
   * **Order Modification**: Implement functionality to remove individual items from the current order list.
   * **Discount/Coupons**: Add logic to apply a fixed-amount or percentage discount to the order total.
-  * **Data Persistence**: Save orders to a persistent storage (e.g., CSV file or simple database) instead of just generating a one-time receipt, allowing for history tracking.
   * **Detailed Topping Pricing**: Display the cost of paid toppings directly in the topping selection menu.
   * **Inventory/Stock**: Introduce an inventory system to track ingredient stock.
+  * **GUI**: Cereate an interactive GUI with JavaFX
