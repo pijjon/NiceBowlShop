@@ -17,6 +17,7 @@ public class Donburi extends MenuItem {
     public Donburi(DonburiType donburiType, DonburiSize size) {
         super(donburiType.name(), size.getBasePrice());
         this.size = size;
+        this.type = donburiType;
     }
 
     public DonburiSize getSize() {
