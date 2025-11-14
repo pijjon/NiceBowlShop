@@ -187,7 +187,8 @@ public class UserInterface {
         if (!currentOrder.getDonburiItems().isEmpty()) {
             System.out.println("\tDonburi's:");
             for (Donburi donburi : currentOrder.getDonburiItems()) {
-                System.out.println("\t\t" + donburi.getType().getDisplayName() + "(" + donburi.getSize() + ")" + " Base Price: " + donburi.getSize().getBasePrice() );
+                System.out.println("\t\t" + donburi.getType().getDisplayName() + "(" + donburi.getSize() + ")" +
+                        " Base Price: " + money(donburi.getSize().getBasePrice()));
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
                     System.out.println("\t\t\tPremium Toppings:");
@@ -195,9 +196,9 @@ public class UserInterface {
                     for (int i = 0; i < premiums.size(); i++) {
                         Topping premium = premiums.get(i);
                         if (i > 0) {
-                            System.out.println("\t\t\t\t- (+" + donburi.getSize().getExtraPrem() + ") " + premium.getName());
+                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getExtraPrem()) + ") " + premium.getName());
                         } else {
-                            System.out.println("\t\t\t\t- (+" + donburi.getSize().getFirstPrem() + ") " + premium.getName());
+                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getFirstPrem()) + ") " + premium.getName());
                         }
                     }
                 }
@@ -208,9 +209,9 @@ public class UserInterface {
                     for (int i = 0; i < oils.size(); i++) {
                         Topping oil = oils.get(i);
                         if (i > 0) {
-                            System.out.println("\t\t\t\t- (+" + donburi.getSize().getExtraOil() + ") " + oil.getName());
+                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getExtraOil()) + ") " + oil.getName());
                         } else {
-                            System.out.println("\t\t\t\t- (+" + donburi.getSize().getFirstOil() + ") " + oil.getName());
+                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getFirstOil()) + ") " + oil.getName());
                         }
                     }
                 }
@@ -236,15 +237,15 @@ public class UserInterface {
                     }
                 }
 
-                System.out.println("\t\t\t\t\t\tItem Total: " + donburi.getPrice());
+                System.out.println("\t\t\t\t\t\tItem Total: " + money(donburi.getPrice()));
             }
         }
 
         if (!currentOrder.getDrinkItems().isEmpty()) {
             System.out.println("\tDrinks:");
             for (Drink drink : currentOrder.getDrinkItems()) {
-                System.out.println("\t\t" + drink.getName() + "(" + drink.getSize().name()+ ")");
-                System.out.println("\t\t\t\t\t\tItem Total: " + drink.getPrice());
+                System.out.println("\t\t" + drink.getName() + "(" + drink.getSize().name() + ")");
+                System.out.println("\t\t\t\t\t\tItem Total: " + money(drink.getPrice()));
             }
         }
 
@@ -252,12 +253,13 @@ public class UserInterface {
             System.out.println("\tSoup:");
             for (Soup soup : currentOrder.getSoupItems()) {
                 System.out.println("\t\t" + soup.getName() + ": ");
-                System.out.println("\t\t\t\t\t\tItem Total: " + soup.getPrice());
+                System.out.println("\t\t\t\t\t\tItem Total: " + money(soup.getPrice()));
             }
         }
 
-        System.out.println("Order Total: " + currentOrder.getOrderTotal());
+        System.out.println("Order Total: " + money(currentOrder.getOrderTotal()));
     }
+
 
     public void processCreateDonburiRequest() {
         boolean isRunning = true;
@@ -499,11 +501,10 @@ public class UserInterface {
     }
 
 
-    // private void clearScanner() {
-    //     while (scanner.hasNext()) {
-    //         scanner.nextLine();
-    //     }
-    // }
+    private String money(double value) {
+        return String.format("%.2f", value);
+    }
+
 
 
 }
