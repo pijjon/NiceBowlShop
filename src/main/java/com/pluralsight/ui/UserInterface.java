@@ -175,11 +175,7 @@ public class UserInterface {
 
         }
     }
-
-
-    private void promptForDonburiToppings(Donburi currentDonburi) {
-
-    }
+    
 
     private void processAddDonburiToOrderRequest(Donburi currentDonburi) {
         currentOrder.addItem(currentDonburi);
