@@ -62,7 +62,7 @@ public class UserInterface {
                     processAddDrinkRequest();
                     break;
                 case 3:
-                    // processAddSoupRequest();
+                    processAddSoupRequest();
                     break;
                 case 4:
                     // processCheckOutRequest();
@@ -74,8 +74,38 @@ public class UserInterface {
         }
     }
 
-    private void processAddDrinkRequest() {
+    private void processAddSoupRequest() {
+        SoupName soupName = null;
         boolean isRunning = true;
+        while (isRunning) {
+            int response = askUserInt("""
+                    SOUPS
+                    
+                    1) Miso Soup
+                    2) Seafood Soup
+                    
+                    Please select a drink to add:
+                    
+                    """);
+
+            switch (response) {
+                case 1:
+                    soupName = SoupName.MISO_SOUP;
+                    isRunning = false;
+                    break;
+                case 2:
+                    soupName = SoupName.SEAFOOD_SOUP;
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Incorrect input. Try again");
+                    pause(2000);
+            }
+        }
+        currentOrder.addItem(new Soup(soupName));
+    }
+
+    private void processAddDrinkRequest() {
         DrinkSize drinkSize = askForDrinkSize();
         DrinkName drinkName = askForDrinkName();
         Drink newDrink = new Drink(drinkName, drinkSize);
