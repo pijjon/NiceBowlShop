@@ -267,7 +267,6 @@ public class UserInterface {
                     
                     """);
 
-            Donburi currentDonburi;
 
             switch (response.toLowerCase()) {
                 case "s":
@@ -314,7 +313,6 @@ public class UserInterface {
 
             if (responseStr.equalsIgnoreCase("C")) {
                 System.out.println("Confirming Donburi...");
-                System.out.println(currentDonburi.getListOfAllToppings().get(0).getName());
                 pause(2000);
                 processAddDonburiToOrderRequest(currentDonburi);
                 return;
