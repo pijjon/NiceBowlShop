@@ -76,7 +76,14 @@ public class UserInterface {
     }
 
     private void processCheckOutRequest() {
-
+        if (!currentOrder.getAllItems().isEmpty()) {
+            String receipt = generateOrderReceiptText();
+            ReceiptWriter writer = new ReceiptWriter();
+            writer.saveReceiptToFile(receipt);
+        }
+        else {
+            System.out.println("You must order an item before checking out");
+        }
     }
 
     private void processAddSoupRequest() {
