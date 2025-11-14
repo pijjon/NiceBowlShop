@@ -327,5 +327,11 @@ public class UserInterface {
     }
 
 
+    private void clearScanner() {
+        while (scanner.hasNext()) {
+            scanner.next();
+        }
+    }
+
 
 }
