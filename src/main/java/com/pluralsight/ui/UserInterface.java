@@ -348,7 +348,8 @@ public class UserInterface {
                         2) no
                         3) what
                         
-                        """) == 1) ;
+                        """) == 1);
+                currentDonburi.setToasted(toasted);
                 pause(2000);
                 processAddDonburiToOrderRequest(currentDonburi);
                 return;
