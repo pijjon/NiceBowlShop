@@ -119,8 +119,8 @@ public class UserInterface {
     }
 
     private void processAddDrinkRequest() {
-        DrinkSize drinkSize = askForDrinkSize();
         DrinkName drinkName = askForDrinkName();
+        DrinkSize drinkSize = askForDrinkSize();
         Drink newDrink = new Drink(drinkName, drinkSize);
         currentOrder.addItem(newDrink);
     }
@@ -205,7 +205,11 @@ public class UserInterface {
                         .append(donburi.getType().getDisplayName())
                         .append("(").append(donburi.getSize()).append(")")
                         .append("(").append(money(donburi.getSize().getBasePrice())).append(")")
+                        .append("\n\t\t")
+                        .append("Toasted: ")
+                        .append(donburi.isToasted())
                         .append("\n");
+
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
                     sb.append("\t\t\tPremium Toppings:\n");
