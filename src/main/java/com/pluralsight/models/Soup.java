@@ -1,9 +1,10 @@
 package com.pluralsight.models;
 
-public class Soup extends MenuItem {
-    public Soup(String name, double price) {
-        super(name, 6.00);
+import com.pluralsight.models.enums.SoupName;
 
+public class Soup extends MenuItem {
+    public Soup(SoupName soupName) {
+        super(soupName.name(), 6.00);
     }
 
     @Override
