@@ -74,57 +74,71 @@ This diagram illustrates the core class structure and relationships, highlightin
 
 ```mermaid
 classDiagram
-    direction LR
+    %% Abstract Class
     class MenuItem {
-        +String name
-        #double basePrice
-        +getPrice(): double (abstract)
+        -name: String
+        -basePrice: double
+        +getPrice(): double
     }
-    class Order {
-        +String customer
-        -List~MenuItem~ items
-        +addItem(MenuItem)
-        +getOrderTotal(): double
-    }
+
+    %% Concrete Classes
     class Donburi {
-        -DonburiSize size
-        -DonburiType type
-        -List~Topping~ toppings
-        -boolean toasted
+        -size: DonburiSize
+        -type: DonburiType
+        -toppings: List~Topping~
+        -side: SideName
+        -toasted: boolean
+        +addTopping(t: Topping)
+        +removeTopping(t: Topping)
         +getPrice(): double
     }
+
     class Drink {
-        -DrinkSize size
+        -size: DrinkSize
+        +getSize(): DrinkSize
+        +setSize(size: DrinkSize)
         +getPrice(): double
     }
+
     class Soup {
         +getPrice(): double
     }
-    class Topping {
-        -String name
-        #ToppingType type
-    }
-    class UserInterface {
-        -Order currentOrder
-        +start()
-    }
-    class ReceiptWriter {
-        +saveReceiptToFile(String)
-    }
-    class DonburiSize
-    class DrinkSize
-    class ToppingType
 
+    class Topping {
+        -name: String
+        -type: ToppingType
+        +getName(): String
+        +getType(): ToppingType
+    }
+
+    class Order {
+        -customer: String
+        -items: List~MenuItem~
+        +addItem(item: MenuItem)
+        +getOrderTotal(): double
+    }
+
+    class UserInterface {
+        -scanner: Scanner
+        -currentOrder: Order
+        +start()
+        +displayCurrentOrder()
+    }
+
+    class ReceiptWriter {
+        +saveReceiptToFile(receipt: String)
+    }
+
+    %% Relationships
     MenuItem <|-- Donburi
     MenuItem <|-- Drink
     MenuItem <|-- Soup
-    Order "1" *-- "0..*" MenuItem : contains
-    Donburi "1" *-- "0..*" Topping : has
-    Topping "1" -- "1" ToppingType : has type
-    Donburi "1" -- "1" DonburiSize : has size
-    Drink "1" -- "1" DrinkSize : has size
-    UserInterface ..> Order
-    UserInterface ..> ReceiptWriter
+
+    Order "1" *-- "*" MenuItem
+    Donburi "1" *-- "*" Topping
+    UserInterface "1" --> "1" Order
+    UserInterface "1" --> "1" ReceiptWriter
+
 ```
 
 -----
