@@ -65,7 +65,7 @@ public class UserInterface {
                     processAddSoupRequest();
                     break;
                 case 4:
-                    // processCheckOutRequest();
+                    processCheckOutRequest();
                     break;
                 default:
                     System.out.println("Invalid input, try again!");
