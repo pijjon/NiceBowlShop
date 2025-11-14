@@ -260,7 +260,7 @@ public class UserInterface {
                 }
                 default -> {
                     System.out.println("Invalid selection, please try again.");
-                    scanner.nextLine(); // clear scanner buffer
+                    pause(2000);
                 }
             }
         }
