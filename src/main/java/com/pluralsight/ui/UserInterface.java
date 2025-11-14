@@ -247,7 +247,7 @@ public class UserInterface {
                 }
 
                 if (!donburi.getListOfSides().isEmpty()) {
-                    sb.append("\t\t\tRegular Toppings:\n");
+                    sb.append("\t\t\tSide:\n");
                     for (Topping topping : donburi.getListOfSides()) {
                         sb.append("\t\t\t\t- ").append(topping.getName()).append("\n");
                     }
