@@ -344,7 +344,6 @@ public class UserInterface {
                     """);
 
             if (responseStr.equalsIgnoreCase("C")) {
-                System.out.println("Confirming Donburi...");
                 boolean toasted = (askUserInt("""
                         Do you want your donburi toasted?
                         
@@ -354,6 +353,7 @@ public class UserInterface {
                         
                         """) == 1);
                 currentDonburi.setToasted(toasted);
+                System.out.println("Confirming Donburi...");
                 pause(2000);
                 processAddDonburiToOrderRequest(currentDonburi);
                 return;
