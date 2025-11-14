@@ -185,10 +185,10 @@ public class UserInterface {
         }
 
         if (!currentOrder.getDonburiItems().isEmpty()) {
-            System.out.println("\tDonburi's:");
+            System.out.println("\tDonburis");
             for (Donburi donburi : currentOrder.getDonburiItems()) {
                 System.out.println("\t\t" + donburi.getType().getDisplayName() + "(" + donburi.getSize() + ")" +
-                        " Base Price: " + money(donburi.getSize().getBasePrice()));
+                        "(" + money(donburi.getSize().getBasePrice()) + ")");
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
                     System.out.println("\t\t\tPremium Toppings:");
@@ -502,7 +502,7 @@ public class UserInterface {
 
 
     private String money(double value) {
-        return String.format("%.2f", value);
+        return String.format("$%.2f", value);
     }
 
 
