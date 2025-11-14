@@ -13,11 +13,20 @@ public class Donburi extends MenuItem {
     private DonburiType type;
     private final List<Topping> toppings = new ArrayList<>();
     private SideName side;
+    private boolean toasted;
 
     public Donburi(DonburiType donburiType, DonburiSize size) {
         super(donburiType.name(), size.getBasePrice());
         this.size = size;
         this.type = donburiType;
+    }
+
+    public boolean isToasted() {
+        return toasted;
+    }
+
+    public void setToasted(boolean toasted) {
+        this.toasted = toasted;
     }
 
     public DonburiSize getSize() {
