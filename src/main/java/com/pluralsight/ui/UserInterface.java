@@ -2,8 +2,11 @@ package com.pluralsight.ui;
 
 import com.pluralsight.models.Donburi;
 import com.pluralsight.models.Order;
+import com.pluralsight.models.Topping;
 import com.pluralsight.models.enums.DonburiSize;
 import com.pluralsight.models.enums.DonburiType;
+import com.pluralsight.models.enums.ToppingItem;
+import com.pluralsight.models.enums.ToppingType;
 
 import java.util.Scanner;
 
@@ -14,7 +17,7 @@ public class UserInterface {
     public void start() {
         boolean isRunning = true;
         while (isRunning) {
-        clearScreen();
+            clearScreen();
             int response = askUserInt("""
                     WELCOME TO THE DON-GEON
                     1) Start an Order
@@ -55,7 +58,7 @@ public class UserInterface {
 
             switch (response) {
                 case 1:
-                    processAddDonburiRequest();
+                    processCreateDonburiRequest();
                     break;
                 case 2:
                     // processAddDrinkRequest();
@@ -72,7 +75,7 @@ public class UserInterface {
         }
     }
 
-    public void processAddDonburiRequest() {
+    public void processCreateDonburiRequest() {
         boolean isRunning = true;
         while (isRunning) {
             clearScreen();
@@ -113,33 +116,96 @@ public class UserInterface {
         }
     }
 
-    private Donburi donburiBuilder(DonburiSize size) {
+    private void donburiBuilder(DonburiSize size) {
         DonburiType donburiType = promptForDonburiType();
         Donburi currentDonburi = new Donburi(donburiType, size);
         currentOrder.addItem(currentDonburi);
 
-        promptForDonburiToppings(currentDonburi);
+        boolean isRunning = true;
+        Topping[] selectedToppings = new Topping[ToppingItem.values().length];
+        while (isRunning) {
+            clearScreen();
 
-        return currentDonburi;
+            displaySelectedToppings(selectedToppings);
+            String responseStr = askUserStr("Please select a topping to add/remove: ");
+
+            if (responseStr.equalsIgnoreCase("C")) {
+                System.out.println("Confirming Donburi...");
+                pause(2000);
+                processAddDonburiToOrderRequest(currentDonburi);
+                continue;
+            }
+
+
+            if (responseStr.equalsIgnoreCase("X")) {
+                System.out.println("Cancelling Donburi Creation...");
+                return;
+            }
+
+            int indexOfTopping;
+            try {
+                indexOfTopping = Integer.parseInt(responseStr) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input: please enter a valid number, C, or X.");
+                pause(2000); // give user time to read error before it automatically clears at the start of the loop
+                continue;
+            }
+
+            if (indexOfTopping < 0 || indexOfTopping >= selectedToppings.length) {
+                System.out.println("Invalid number: please choose a topping number from the menu.");
+                pause(2000);
+                continue;
+            }
+
+            if (selectedToppings[indexOfTopping] != null) {
+                Topping existingTopping = selectedToppings[indexOfTopping];
+                currentDonburi.removeTopping(existingTopping);
+                selectedToppings[indexOfTopping] = null;
+            }
+            else {
+                ToppingItem toppingItem = ToppingItem.values()[indexOfTopping];
+                Topping newTopping = new Topping(toppingItem.getDisplayName(), toppingItem.getType());
+                selectedToppings[indexOfTopping] = newTopping;
+                currentDonburi.addTopping(newTopping);
+            }
+
+        }
+    }
+
+    private void pause(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            System.out.printf("Could not pause application for %d seconds", time);
+            e.printStackTrace();
+        }
     }
 
     private void promptForDonburiToppings(Donburi currentDonburi) {
-        boolean isRunning = true;
-        while (isRunning) {
-            clearScreen();
-            int response = askUserInt(String.format("""
-                    PLEASE SELECT TOPPINGS TO ADD:
-                    
-                    [%s] %s
-                    [%s] %s
-                    [%s] %s
-                    [%s] %s
-                    [%s] %s
-                    [%s] %s
-                    
-                    """
 
-            ));
+    }
+
+    private void processAddDonburiToOrderRequest(Donburi currentDonburi) {
+        currentOrder.addItem(currentDonburi);
+    }
+
+    private static void displaySelectedToppings(Topping[] selectedToppings) {
+        int displayIndex = 1;
+        // loop through ToppingType values to get headers above each list of topping categories
+        for (ToppingType type : ToppingType.values()) {
+            System.out.println(type.name() + ":");
+
+            // for each topping type, list toppings below
+            for (ToppingItem toppingItem : ToppingItem.values()) {
+                if (toppingItem.getType() == type) {
+                    System.out.printf("[%s] %2d) %s%n",
+                            (selectedToppings[displayIndex - 1] != null) ? "X" : " ",
+                            displayIndex,
+                            toppingItem.getDisplayName()
+                    );
+                    displayIndex++;
+                }
+            }
         }
     }
 
