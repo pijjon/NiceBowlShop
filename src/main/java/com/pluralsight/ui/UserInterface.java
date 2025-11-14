@@ -182,8 +182,7 @@ public class UserInterface {
         if (!currentOrder.getDonburiItems().isEmpty()) {
             System.out.println("\tDonburi's:");
             for (Donburi donburi : currentOrder.getDonburiItems()) {
-                System.out.println("\t" + donburi.getType().getDisplayName() + " (base price: " + donburi.getSize().getBasePrice() + ")");
-
+                System.out.println("\t" + donburi.getType().getDisplayName() + "( " + donburi.getSize() + " Base Price: " + donburi.getSize().getBasePrice() + ")");
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
                     System.out.println("\t\tPremium Toppings:");
@@ -232,7 +231,7 @@ public class UserInterface {
                     }
                 }
 
-                System.out.println("\t\t\t\t\t\t Item Total: " + donburi.getPrice());
+                System.out.println("\t\t\t\t\t\tItem Total: " + donburi.getPrice());
             }
         }
 
@@ -246,7 +245,7 @@ public class UserInterface {
         if (!currentOrder.getSoupItems().isEmpty()) {
             System.out.println("\tSoup:");
             for (Soup soup : currentOrder.getSoupItems()) {
-                System.out.println("\t" + soup.getName() + ": " + soup.getPrice());
+                System.out.println("\t\t\t\t\t\t" + soup.getName() + ": " + soup.getPrice());
             }
         }
 
