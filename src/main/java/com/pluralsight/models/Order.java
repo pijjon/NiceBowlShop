@@ -32,21 +32,24 @@ public class Order {
         return items;
     }
 
-    public List<MenuItem> getDonburiItems() {
+    public List<Donburi> getDonburiItems() {
         return this.items.stream()
                 .filter(item -> item instanceof Donburi)
+                .map(item -> (Donburi) item)
                 .toList();
     }
 
-    public List<MenuItem> getDrinkItems() {
+    public List<Drink> getDrinkItems() {
         return this.items.stream()
                 .filter(item -> item instanceof Drink)
+                .map(item -> (Drink) item)
                 .toList();
     }
 
-    public List<MenuItem> getSoupItems() {
+    public List<Soup> getSoupItems() {
         return this.items.stream()
                 .filter(item -> item instanceof Soup)
+                .map(item -> (Soup) item)
                 .toList();
     }
 
@@ -56,8 +59,9 @@ public class Order {
 
     public double getOrderTotal() {
         double total = 0;
-        // iterate through items and sum up each MenuItem price
-        // return sum
+        for (MenuItem item : this.items) {
+            total += item.getPrice();
+        }
         return total;
     }
 
