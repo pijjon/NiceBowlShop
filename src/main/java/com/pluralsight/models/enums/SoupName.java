@@ -1,6 +1,6 @@
 package com.pluralsight.models.enums;
 
 public enum SoupName {
-    MISO,
-    SEAFOOD
+    MISO_SOUP,
+    SEAFOOD_SOUP
 }
