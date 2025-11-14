@@ -6,7 +6,7 @@ A robust Java Command-Line Interface (CLI) Point of Sale (POS) system designed t
 
 ## Table of Contents
 
-1.  [Project Title and Introduction](#1-project-title-and-introduction)
+1.  [Nice Bowl Shop](#1-Nice-Bowl-Shop)
 2.  [Project Structure](#2-project-structure)
 3.  [UML Diagram](#3-uml-diagram)
 4.  [How to Run the Project](#4-how-to-run-the-project)
