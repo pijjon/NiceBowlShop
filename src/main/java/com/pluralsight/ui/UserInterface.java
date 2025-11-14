@@ -124,7 +124,6 @@ public class UserInterface {
     private void donburiBuilder(DonburiSize size) {
         DonburiType donburiType = promptForDonburiType();
         Donburi currentDonburi = new Donburi(donburiType, size);
-        currentOrder.addItem(currentDonburi);
 
         boolean isRunning = true;
         Topping[] selectedToppings = new Topping[ToppingItem.values().length];
