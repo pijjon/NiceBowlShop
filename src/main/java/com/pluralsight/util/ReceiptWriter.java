@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ReceiptWriter {
 
+    // method for storing receipt
     public void saveReceiptToFile(String receiptString) {
         String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".txt";
         String path = "receipts/" + fileName;

@@ -22,6 +22,7 @@ public enum DonburiSize {
         this.extraOil = extraOil;
     }
 
+    // methods for getting prices of toppings
     public double getBasePrice() {
         return this.basePrice;
     }

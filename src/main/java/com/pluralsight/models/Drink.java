@@ -6,6 +6,7 @@ import com.pluralsight.models.enums.DrinkSize;
 public class Drink extends MenuItem {
     private DrinkSize size;
 
+    // constructor
     public Drink(DrinkName drinkName, DrinkSize size) {
         super(drinkName.name(), size.getPrice()); // just beer for now until other drinks get added as an option
         this.size = size;

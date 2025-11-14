@@ -15,12 +15,15 @@ public class Donburi extends MenuItem {
     private SideName side;
     private boolean toasted;
 
+    // constructor
     public Donburi(DonburiType donburiType, DonburiSize size) {
         super(donburiType.name(), size.getBasePrice());
         this.size = size;
         this.type = donburiType;
     }
 
+
+    // getters and setters
     public boolean isToasted() {
         return toasted;
     }
@@ -61,6 +64,7 @@ public class Donburi extends MenuItem {
         this.side = side;
     }
 
+    // method for calculating Donburi price
     @Override
     public double getPrice() {
         double currentPrice = this.basePrice;
@@ -78,6 +82,7 @@ public class Donburi extends MenuItem {
         return currentPrice;
     }
 
+    // methods for getting filtered toppings lists
     public List<Topping> getListOfAllToppings() {
         return toppings;
     }

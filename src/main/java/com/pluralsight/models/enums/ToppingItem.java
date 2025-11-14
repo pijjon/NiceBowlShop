@@ -1,6 +1,7 @@
 package com.pluralsight.models.enums;
 
 public enum ToppingItem {
+    // enum for storing topping name and type
     // PREMIUM
     TAMAGOYAKI("Tamagoyaki", ToppingType.PREMIUM),
     MARINATED_EGG("Marinated Egg", ToppingType.PREMIUM),

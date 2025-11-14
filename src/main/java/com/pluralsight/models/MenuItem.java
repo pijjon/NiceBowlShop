@@ -4,11 +4,13 @@ public abstract class MenuItem {
     protected String name;
     protected double basePrice;
 
+    // constructor
     public MenuItem(String name, double basePrice) {
         this.basePrice = basePrice;
         this.name = name;
     }
 
+    // getters and setters
     public String getName() {
         return name;
     }

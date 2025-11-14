@@ -11,6 +11,7 @@ public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private Order currentOrder;
 
+    // method for starting the program
     public void start() {
         boolean isRunning = true;
         while (isRunning) {
@@ -39,11 +40,13 @@ public class UserInterface {
         }
     }
 
+    // displays ordering screen
     private void orderScreen() {
         boolean isRunning = true;
         while (isRunning) {
             clearScreen();
             System.out.println("Welcome, " + currentOrder.getCustomer());
+
             displayCurrentOrder();
             int response = askUserInt("""
                     ORDER MENU
@@ -76,7 +79,9 @@ public class UserInterface {
         }
     }
 
+    // performs checkOut
     private void processCheckOutRequest() {
+        clearScreen();
         if (!currentOrder.getAllItems().isEmpty()) {
             String receipt = generateOrderReceiptText();
             ReceiptWriter writer = new ReceiptWriter();
@@ -87,10 +92,12 @@ public class UserInterface {
         }
     }
 
+    // method for displaying soup menu
     private void processAddSoupRequest() {
         SoupName soupName = null;
         boolean isRunning = true;
         while (isRunning) {
+            clearScreen();
             int response = askUserInt("""
                     SOUPS
                     
@@ -115,20 +122,26 @@ public class UserInterface {
                     pause(2000);
             }
         }
+        // add soup to order
         currentOrder.addItem(new Soup(soupName));
     }
 
+    // display drink ordering menu
     private void processAddDrinkRequest() {
-        DrinkName drinkName = askForDrinkName();
-        DrinkSize drinkSize = askForDrinkSize();
+        clearScreen();
+        DrinkName drinkName = askForDrinkName(); // prompt for drink name
+        DrinkSize drinkSize = askForDrinkSize(); // prompt for drink size
         Drink newDrink = new Drink(drinkName, drinkSize);
+        // add drink to order
         currentOrder.addItem(newDrink);
     }
 
+    // asks for drinks name
     private DrinkName askForDrinkName() {
         DrinkName drinkName = null;
         boolean isRunning = true;
         while (isRunning) {
+            clearScreen();
             int response = askUserInt("""
                     DRINKS
                     
@@ -156,10 +169,12 @@ public class UserInterface {
         return drinkName;
     }
 
+    // asks for drink size
     private DrinkSize askForDrinkSize() {
         boolean isRunning = true;
         DrinkSize size = null;
         while (isRunning) {
+            clearScreen();
             int response = askUserInt("""
                     What size drink do you want?
                     
@@ -184,12 +199,14 @@ public class UserInterface {
         return size;
     }
 
-
+    // renders current order and price
     private void displayCurrentOrder() {
+        clearScreen();
         System.out.println("Current Order:");
         System.out.println(generateOrderReceiptText());
     }
 
+    // creates receipt string (also used to make receipt later)
     private String generateOrderReceiptText() {
         StringBuilder sb = new StringBuilder();
 
@@ -283,7 +300,7 @@ public class UserInterface {
         return sb.toString();
     }
 
-
+    // display donburi size ordering menu
     public void processCreateDonburiRequest() {
         boolean isRunning = true;
         while (isRunning) {
@@ -326,12 +343,13 @@ public class UserInterface {
         }
     }
 
+    // display donburi topping menu
     private void donburiBuilder(DonburiSize size) {
         DonburiType donburiType = promptForDonburiType();
         Donburi currentDonburi = new Donburi(donburiType, size);
 
         boolean isRunning = true;
-        Topping[] selectedToppings = new Topping[ToppingItem.values().length];
+        Topping[] selectedToppings = new Topping[ToppingItem.values().length]; // keeps track of selected toppings
         while (isRunning) {
             clearScreen();
 
@@ -381,23 +399,25 @@ public class UserInterface {
 
             if (selectedToppings[indexOfTopping] != null) {
                 Topping existingTopping = selectedToppings[indexOfTopping];
-                currentDonburi.removeTopping(existingTopping);
-                selectedToppings[indexOfTopping] = null;
+                currentDonburi.removeTopping(existingTopping); // remove from Donburi object
+                selectedToppings[indexOfTopping] = null; // remove from array (for display accuracy)
             } else {
                 ToppingItem toppingItem = ToppingItem.values()[indexOfTopping];
                 Topping newTopping = new Topping(toppingItem, toppingItem.getType());
-                selectedToppings[indexOfTopping] = newTopping;
-                currentDonburi.addTopping(newTopping);
+                selectedToppings[indexOfTopping] = newTopping; // add to array (for display accuracy)
+                currentDonburi.addTopping(newTopping); // add to Donburi object
             }
 
         }
     }
 
 
+    // method to add Donburi to Order
     private void processAddDonburiToOrderRequest(Donburi currentDonburi) {
         currentOrder.addItem(currentDonburi);
     }
 
+    // display selected toppings from array
     private static void displaySelectedToppings(Topping[] selectedToppings) {
         int displayIndex = 1;
         // loop through ToppingType values to get headers above each list of topping categories
@@ -418,6 +438,7 @@ public class UserInterface {
         }
     }
 
+    // ask user for Donburi selection
     private DonburiType promptForDonburiType() {
 
         boolean isRunning = true;
@@ -481,6 +502,7 @@ public class UserInterface {
     }
 
 
+    // methods for prompting user for input
     public String askUserStr(String question) {
         while (true) {
             System.out.println(question);
@@ -523,6 +545,7 @@ public class UserInterface {
         System.out.flush();
     }
 
+    // method for pausing thread to allow time for user to read errors; tbh only used bc im clearing the console each time
     private void pause(int time) {
         try {
             Thread.sleep(time);
@@ -533,6 +556,7 @@ public class UserInterface {
     }
 
 
+    // formats money numbers
     private String money(double value) {
         return String.format("$%.2f", value);
     }

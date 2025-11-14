@@ -8,24 +8,14 @@ public class Order {
     protected String orderName;
     protected List<MenuItem> items = new ArrayList<>();
 
+    // constructor
     public Order(String customer) {
         this.customer = customer;
     }
 
+    // getters and setters
     public String getCustomer() {
         return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public String getOrderName() {
-        return orderName;
-    }
-
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
     }
 
     public List<MenuItem> getAllItems() {

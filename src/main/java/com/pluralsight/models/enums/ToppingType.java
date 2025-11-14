@@ -1,6 +1,7 @@
 package com.pluralsight.models.enums;
 
 public enum ToppingType {
+    // enum for storing diff topping types
     PREMIUM,
     AROMA_OIL,
     REGULAR,
