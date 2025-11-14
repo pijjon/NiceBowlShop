@@ -116,7 +116,7 @@ public class UserInterface {
 
                 default:
                     System.out.println("INVALID SELECTION, PLEASE TRY AGAIN");
-                    scanner.nextLine(); // clear the buffer
+                    pause(2000);
             }
         }
     }
