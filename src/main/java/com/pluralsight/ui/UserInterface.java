@@ -341,6 +341,14 @@ public class UserInterface {
 
             if (responseStr.equalsIgnoreCase("C")) {
                 System.out.println("Confirming Donburi...");
+                boolean toasted = (askUserInt("""
+                        Do you want your donburi toasted?
+                        
+                        1) yes
+                        2) no
+                        3) what
+                        
+                        """) == 1) ;
                 pause(2000);
                 processAddDonburiToOrderRequest(currentDonburi);
                 return;
