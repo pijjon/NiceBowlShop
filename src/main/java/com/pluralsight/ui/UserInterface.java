@@ -37,7 +37,7 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid selection, please try again!");
-                    clearScanner();
+                    pause(2000);
             }
         }
     }
@@ -72,7 +72,8 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid input, try again!");
-                    scanner.nextLine();
+                    pause(2000);
+
             }
         }
     }
@@ -273,8 +274,8 @@ public class UserInterface {
             try {
                 return scanner.nextLine().trim();
             } catch (Exception e) {
-                System.out.println("Invalid input, please enter a string!");
-                scanner.nextLine();
+                System.out.println("Invalid input!");
+                pause(2000);
             }
         }
     }
@@ -289,6 +290,7 @@ public class UserInterface {
             } catch (Exception e) {
                 System.out.println("Invalid input, please enter a number!");
                 scanner.nextLine();
+                pause(2000);
             }
         }
     }
@@ -318,11 +320,11 @@ public class UserInterface {
     }
 
 
-    private void clearScanner() {
-        while (scanner.hasNext()) {
-            scanner.nextLine();
-        }
-    }
+    // private void clearScanner() {
+    //     while (scanner.hasNext()) {
+    //         scanner.nextLine();
+    //     }
+    // }
 
 
 }
