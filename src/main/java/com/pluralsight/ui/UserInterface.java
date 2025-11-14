@@ -179,85 +179,96 @@ public class UserInterface {
 
     private void displayCurrentOrder() {
         System.out.println("Current Order:");
+        System.out.println(generateOrderReceiptText());
+    }
+
+    private String generateOrderReceiptText() {
+        StringBuilder sb = new StringBuilder();
+
         if (currentOrder.getAllItems().isEmpty()) {
-            System.out.println("Your order is currently empty... Order some food!");
-            return;
+            sb.append("Your order is currently empty... Order some food!\n");
+            return sb.toString();
         }
 
         if (!currentOrder.getDonburiItems().isEmpty()) {
-            System.out.println("\tDonburis");
+            sb.append("\tDonburis\n");
             for (Donburi donburi : currentOrder.getDonburiItems()) {
-                System.out.println("\t\t" + donburi.getType().getDisplayName() + "(" + donburi.getSize() + ")" +
-                        "(" + money(donburi.getSize().getBasePrice()) + ")");
+                sb.append("\t\t")
+                        .append(donburi.getType().getDisplayName())
+                        .append("(").append(donburi.getSize()).append(")")
+                        .append("(").append(money(donburi.getSize().getBasePrice())).append(")")
+                        .append("\n");
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
-                    System.out.println("\t\t\tPremium Toppings:");
+                    sb.append("\t\t\tPremium Toppings:\n");
                     List<Topping> premiums = donburi.getListOfPremiumToppings();
                     for (int i = 0; i < premiums.size(); i++) {
                         Topping premium = premiums.get(i);
                         if (i > 0) {
-                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getExtraPrem()) + ") " + premium.getName());
+                            sb.append("\t\t\t\t- (+").append(money(donburi.getSize().getExtraPrem())).append(") ").append(premium.getName()).append("\n");
                         } else {
-                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getFirstPrem()) + ") " + premium.getName());
+                            sb.append("\t\t\t\t- (+").append(money(donburi.getSize().getFirstPrem())).append(") ").append(premium.getName()).append("\n");
                         }
                     }
                 }
 
                 if (!donburi.getListOfAromaOils().isEmpty()) {
-                    System.out.println("\t\t\tAroma Oils:");
+                    sb.append("\t\t\tAroma Oils:\n");
                     List<Topping> oils = donburi.getListOfAromaOils();
                     for (int i = 0; i < oils.size(); i++) {
                         Topping oil = oils.get(i);
                         if (i > 0) {
-                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getExtraOil()) + ") " + oil.getName());
+                            sb.append("\t\t\t\t- (+").append(money(donburi.getSize().getExtraOil())).append(") ").append(oil.getName()).append("\n");
                         } else {
-                            System.out.println("\t\t\t\t- (+" + money(donburi.getSize().getFirstOil()) + ") " + oil.getName());
+                            sb.append("\t\t\t\t- (+").append(money(donburi.getSize().getFirstOil())).append(") ").append(oil.getName()).append("\n");
                         }
                     }
                 }
 
                 if (!donburi.getListOfRegularToppings().isEmpty()) {
-                    System.out.println("\t\t\tRegular Toppings:");
+                    sb.append("\t\t\tRegular Toppings:\n");
                     for (Topping topping : donburi.getListOfRegularToppings()) {
-                        System.out.println("\t\t\t\t- " + topping.getName());
+                        sb.append("\t\t\t\t- ").append(topping.getName()).append("\n");
                     }
                 }
 
                 if (!donburi.getListOfSauces().isEmpty()) {
-                    System.out.println("\t\t\tSauce:");
+                    sb.append("\t\t\tSauce:\n");
                     for (Topping topping : donburi.getListOfSauces()) {
-                        System.out.println("\t\t\t\t- " + topping.getName());
+                        sb.append("\t\t\t\t- ").append(topping.getName()).append("\n");
                     }
                 }
 
                 if (!donburi.getListOfSides().isEmpty()) {
-                    System.out.println("\t\t\tRegular Toppings:");
+                    sb.append("\t\t\tRegular Toppings:\n");
                     for (Topping topping : donburi.getListOfSides()) {
-                        System.out.println("\t\t\t\t- " + topping.getName());
+                        sb.append("\t\t\t\t- ").append(topping.getName()).append("\n");
                     }
                 }
 
-                System.out.println("\t\t\t\t\t\tItem Total: " + money(donburi.getPrice()));
+                sb.append("\t\t\t\t\t\tItem Total: ").append(money(donburi.getPrice())).append("\n");
             }
         }
 
         if (!currentOrder.getDrinkItems().isEmpty()) {
-            System.out.println("\tDrinks:");
+            sb.append("\tDrinks:\n");
             for (Drink drink : currentOrder.getDrinkItems()) {
-                System.out.println("\t\t" + drink.getName() + "(" + drink.getSize().name() + ")");
-                System.out.println("\t\t\t\t\t\tItem Total: " + money(drink.getPrice()));
+                sb.append("\t\t").append(drink.getName()).append("(").append(drink.getSize().name()).append(")\n");
+                sb.append("\t\t\t\t\t\tItem Total: ").append(money(drink.getPrice())).append("\n");
             }
         }
 
         if (!currentOrder.getSoupItems().isEmpty()) {
-            System.out.println("\tSoup:");
+            sb.append("\tSoup:\n");
             for (Soup soup : currentOrder.getSoupItems()) {
-                System.out.println("\t\t" + soup.getName() + ": ");
-                System.out.println("\t\t\t\t\t\tItem Total: " + money(soup.getPrice()));
+                sb.append("\t\t").append(soup.getName()).append(":\n");
+                sb.append("\t\t\t\t\t\tItem Total: ").append(money(soup.getPrice())).append("\n");
             }
         }
 
-        System.out.println("Order Total: " + money(currentOrder.getOrderTotal()));
+        sb.append("Order Total: ").append(money(currentOrder.getOrderTotal())).append("\n");
+
+        return sb.toString();
     }
 
 
