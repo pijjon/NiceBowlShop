@@ -1,13 +1,9 @@
 package com.pluralsight.ui;
 
-import com.pluralsight.models.Donburi;
-import com.pluralsight.models.Order;
-import com.pluralsight.models.Topping;
-import com.pluralsight.models.enums.DonburiSize;
-import com.pluralsight.models.enums.DonburiType;
-import com.pluralsight.models.enums.ToppingItem;
-import com.pluralsight.models.enums.ToppingType;
+import com.pluralsight.models.*;
+import com.pluralsight.models.enums.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -47,6 +43,7 @@ public class UserInterface {
         while (isRunning) {
             clearScreen();
             System.out.println("Welcome, " + currentOrder.getCustomer());
+            displayCurrentOrder();
             int response = askUserInt("""
                     ORDER MENU
                     
@@ -62,7 +59,7 @@ public class UserInterface {
                     processCreateDonburiRequest();
                     break;
                 case 2:
-                    // processAddDrinkRequest();
+                    processAddDrinkRequest();
                     break;
                 case 3:
                     // processAddSoupRequest();
@@ -73,10 +70,77 @@ public class UserInterface {
                 default:
                     System.out.println("Invalid input, try again!");
                     pause(2000);
-
             }
         }
     }
+
+    private void processAddDrinkRequest() {
+        boolean isRunning = true;
+        DrinkSize drinkSize = askForDrinkSize();
+        DrinkName drinkName = askForDrinkName();
+        Drink newDrink = new Drink(drinkName, drinkSize);
+        currentOrder.addItem(newDrink);
+    }
+
+    private DrinkName askForDrinkName() {
+        DrinkName drinkName = null;
+        boolean isRunning = true;
+        while (isRunning) {
+            int response = askUserInt("""
+                    DRINKS
+                    
+                    1) HIGHBALL
+                    2) BEER
+                    
+                    Please select a drink to add:
+                    
+                    """);
+
+            switch (response) {
+                case 1:
+                    drinkName = DrinkName.HIGHBALL;
+                    isRunning = false;
+                    break;
+                case 2:
+                    drinkName = DrinkName.BEER;
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Incorrect input. Try again");
+                    pause(2000);
+            }
+        }
+        return drinkName;
+    }
+
+    private DrinkSize askForDrinkSize() {
+        boolean isRunning = true;
+        DrinkSize size = null;
+        while (isRunning) {
+            int response = askUserInt("""
+                    What size drink do you want?
+                    
+                    1) Regular
+                    2) Large
+                    
+                    """);
+            switch (response) {
+                case 1:
+                    size = DrinkSize.REGULAR;
+                    isRunning = false;
+                    break;
+                case 2:
+                    size = DrinkSize.LARGE;
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Incorrect input. Try again");
+                    pause(2000);
+            }
+        }
+        return size;
+    }
+
 
     private void displayCurrentOrder() {
         System.out.println("Current Order:");
@@ -88,7 +152,7 @@ public class UserInterface {
         if (!currentOrder.getDonburiItems().isEmpty()) {
             System.out.println("\tDonburi's:");
             for (Donburi donburi : currentOrder.getDonburiItems()) {
-                System.out.println("\t" + donburi.getType().getDisplayName() + "(base: " + donburi.getSize().getBasePrice());
+                System.out.println("\t" + donburi.getType().getDisplayName() + " (base price: " + donburi.getSize().getBasePrice() + ")");
 
 
                 if (!donburi.getListOfPremiumToppings().isEmpty()) {
@@ -138,14 +202,14 @@ public class UserInterface {
                     }
                 }
 
-                System.out.println("Item Total: " + donburi.getPrice());
+                System.out.println("\t\t\t\t\t\t Item Total: " + donburi.getPrice());
             }
         }
 
         if (!currentOrder.getDrinkItems().isEmpty()) {
             System.out.println("\tDrinks:");
             for (Drink drink : currentOrder.getDrinkItems()) {
-                System.out.println("\t" + drink.getName() + ": " + drink.getPrice());
+                System.out.println("\t\t\t\t\t\t" + drink.getName() + ": " + drink.getPrice());
             }
         }
 
@@ -212,13 +276,19 @@ public class UserInterface {
             clearScreen();
 
             displaySelectedToppings(selectedToppings);
-            String responseStr = askUserStr("Please select a topping to add/remove: ");
+            String responseStr = askUserStr("""
+                    
+                    Please input corresponding number to add/remove topping
+                    OR
+                    C) Confirm Toppings     X) Cancel Donburi Order
+                    """);
 
             if (responseStr.equalsIgnoreCase("C")) {
                 System.out.println("Confirming Donburi...");
+                System.out.println(currentDonburi.getListOfAllToppings().get(0).getName());
                 pause(2000);
                 processAddDonburiToOrderRequest(currentDonburi);
-                continue;
+                return;
             }
 
             if (responseStr.equalsIgnoreCase("X")) {
@@ -245,17 +315,16 @@ public class UserInterface {
                 Topping existingTopping = selectedToppings[indexOfTopping];
                 currentDonburi.removeTopping(existingTopping);
                 selectedToppings[indexOfTopping] = null;
-            }
-            else {
+            } else {
                 ToppingItem toppingItem = ToppingItem.values()[indexOfTopping];
-                Topping newTopping = new Topping(toppingItem.getDisplayName(), toppingItem.getType());
+                Topping newTopping = new Topping(toppingItem, toppingItem.getType());
                 selectedToppings[indexOfTopping] = newTopping;
                 currentDonburi.addTopping(newTopping);
             }
 
         }
     }
-    
+
 
     private void processAddDonburiToOrderRequest(Donburi currentDonburi) {
         currentOrder.addItem(currentDonburi);
