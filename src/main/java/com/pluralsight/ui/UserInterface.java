@@ -74,6 +74,10 @@ public class UserInterface {
         }
     }
 
+    private void processCheckOutRequest() {
+
+    }
+
     private void processAddSoupRequest() {
         SoupName soupName = null;
         boolean isRunning = true;
