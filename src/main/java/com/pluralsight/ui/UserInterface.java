@@ -78,6 +78,87 @@ public class UserInterface {
         }
     }
 
+    private void displayCurrentOrder() {
+        System.out.println("Current Order:");
+        if (currentOrder.getAllItems().isEmpty()) {
+            System.out.println("Your order is currently empty... Order some food!");
+            return;
+        }
+
+        if (!currentOrder.getDonburiItems().isEmpty()) {
+            System.out.println("\tDonburi's:");
+            for (Donburi donburi : currentOrder.getDonburiItems()) {
+                System.out.println("\t" + donburi.getType().getDisplayName() + "(base: " + donburi.getSize().getBasePrice());
+
+
+                if (!donburi.getListOfPremiumToppings().isEmpty()) {
+                    System.out.println("\t\tPremium Toppings:");
+                    List<Topping> premiums = donburi.getListOfPremiumToppings();
+                    for (int i = 0; i < premiums.size(); i++) {
+                        Topping premium = premiums.get(i);
+                        if (i > 0) {
+                            System.out.println("\t\t\t- (+" + donburi.getSize().getExtraPrem() + ") " + premium.getName());
+                        } else {
+                            System.out.println("\t\t\t- (+" + donburi.getSize().getFirstPrem() + ") " + premium.getName());
+                        }
+                    }
+                }
+
+                if (!donburi.getListOfAromaOils().isEmpty()) {
+                    System.out.println("\t\tAroma Oils:");
+                    List<Topping> oils = donburi.getListOfAromaOils();
+                    for (int i = 0; i < oils.size(); i++) {
+                        Topping oil = oils.get(i);
+                        if (i > 0) {
+                            System.out.println("\t\t\t- (+" + donburi.getSize().getExtraOil() + ") " + oil.getName());
+                        } else {
+                            System.out.println("\t\t\t- (+" + donburi.getSize().getFirstOil() + ") " + oil.getName());
+                        }
+                    }
+                }
+
+                if (!donburi.getListOfRegularToppings().isEmpty()) {
+                    System.out.println("\t\tRegular Toppings:");
+                    for (Topping topping : donburi.getListOfRegularToppings()) {
+                        System.out.println("\t\t\t- " + topping.getName());
+                    }
+                }
+
+                if (!donburi.getListOfSauces().isEmpty()) {
+                    System.out.println("\t\tSauce:");
+                    for (Topping topping : donburi.getListOfSauces()) {
+                        System.out.println("\t\t\t- " + topping.getName());
+                    }
+                }
+
+                if (!donburi.getListOfSides().isEmpty()) {
+                    System.out.println("\t\tRegular Toppings:");
+                    for (Topping topping : donburi.getListOfSides()) {
+                        System.out.println("\t\t\t- " + topping.getName());
+                    }
+                }
+
+                System.out.println("Item Total: " + donburi.getPrice());
+            }
+        }
+
+        if (!currentOrder.getDrinkItems().isEmpty()) {
+            System.out.println("\tDrinks:");
+            for (Drink drink : currentOrder.getDrinkItems()) {
+                System.out.println("\t" + drink.getName() + ": " + drink.getPrice());
+            }
+        }
+
+        if (!currentOrder.getSoupItems().isEmpty()) {
+            System.out.println("\tSoup:");
+            for (Soup soup : currentOrder.getSoupItems()) {
+                System.out.println("\t" + soup.getName() + ": " + soup.getPrice());
+            }
+        }
+
+        System.out.println("Order Total: " + currentOrder.getOrderTotal());
+    }
+
     public void processCreateDonburiRequest() {
         boolean isRunning = true;
         while (isRunning) {
